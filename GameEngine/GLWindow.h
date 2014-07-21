@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -25,7 +26,7 @@ private:
 	LRESULT CALLBACK WndProcMem(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 	HINSTANCE hInstance;
 	bool active;
-	bool keys[256];
+	vector<bool> keys;
 	int width;
 	int height;
 	int pf;

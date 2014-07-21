@@ -23,10 +23,6 @@ public:
 private:
 	static const int remapMouse[];
 	const GLWindow &win;
-	vector<int> currentKeys;
-	vector<int> downKeys;
-	vector<int> upKeys;
-	vector<int> currentMouse;
-	vector<int> downMouse;
-	vector<int> upMouse;
+	vector<bool> lastKeys;
+	vector<bool> lastMouse;
 };

@@ -79,9 +79,10 @@ void GameEngine::run()
 			}
 
 			time.setDelta(frameTime);
-			input.update();
 
 			game.input(input);
+			input.update();
+
 			game.update();
 
 			#ifdef _DEBUG

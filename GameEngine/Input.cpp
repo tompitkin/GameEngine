@@ -2,7 +2,8 @@
 
 const int Input::remapMouse[] = { VK_LBUTTON, VK_MBUTTON, VK_RBUTTON, VK_XBUTTON1, VK_XBUTTON2 };
 
-Input::Input(const GLWindow &window) : win(window)
+Input::Input(const GLWindow &window) : 
+win(window), lastKeys(NUM_KEYCODES, false), lastMouse(NUM_MOUSEBUTTONS, false)
 {
 }
 
@@ -12,71 +13,41 @@ Input::~Input()
 
 void Input::update()
 {
-	upKeys.clear();
-
 	for (int i = 0; i < NUM_KEYCODES; i++)
-	{
-		if (!getKey(i) && find(currentKeys.begin(), currentKeys.end(), i) != currentKeys.end())
-			upKeys.push_back(i);
-	}
+		lastKeys[i] = getKey(i);
 
-	downKeys.clear();
-	
-	for (int i = 0; i < NUM_KEYCODES; i++)
-	{
-		if (getKey(i) && find(currentKeys.begin(), currentKeys.end(), i) == currentKeys.end())
-			downKeys.push_back(i);
-	}
-
-	currentKeys.clear();
-
-	for (int i = 0; i < NUM_KEYCODES; i++)
-	{
-		if (getKey(i))
-			currentKeys.push_back(i);
-	}
+	for (int i = 0; i < NUM_MOUSEBUTTONS; i++)
+		lastMouse[i] = getMouse(i);
 }
 
 bool Input::getKey(unsigned int keyCode) const
 {
-	if (keyCode < NUM_KEYCODES)
-		return win.isKeyDown(keyCode);
-	return false;
+	return win.isKeyDown(keyCode);
 }
 
 bool Input::getKeyDown(unsigned int keyCode) const
 {
-	if (keyCode < NUM_KEYCODES)
-		return (find(downKeys.begin(), downKeys.end(), keyCode) != downKeys.end());
-	return false;
+	return getKey(keyCode) && !lastKeys[keyCode];
 }
 
 bool Input::getKeyUp(unsigned int keyCode) const
 {
-	if (keyCode < NUM_KEYCODES)
-		return (find(upKeys.begin(), upKeys.end(), keyCode) != upKeys.end());
-	return false;
+	return !getKey(keyCode) && lastKeys[keyCode];
 }
 
 bool Input::getMouse(unsigned int mouseButton) const
 {
-	if (mouseButton < NUM_MOUSEBUTTONS)
-		return getKey(remapMouse[mouseButton]);
-	return false;
+	return getKey(remapMouse[mouseButton]);
 }
 
 bool Input::getMouseDown(unsigned int mouseButton) const
 {
-	if (mouseButton < NUM_MOUSEBUTTONS)
-		return getKeyDown(remapMouse[mouseButton]);
-	return false;
+	return getKeyDown(remapMouse[mouseButton]);
 }
 
 bool Input::getMouseUp(unsigned int mouseButton) const
 {
-	if (mouseButton < NUM_MOUSEBUTTONS)
-		return getKeyUp(remapMouse[mouseButton]);
-	return false;
+	return getKeyUp(remapMouse[mouseButton]);
 }
 
 Vector2f Input::getMousePosition() const

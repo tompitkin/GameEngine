@@ -1,6 +1,6 @@
 #include "GLWindow.h"
 
-GLWindow::GLWindow()
+GLWindow::GLWindow() : keys(256, false)
 {
 	active = false;
 	width = 0;
