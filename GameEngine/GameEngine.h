@@ -4,6 +4,7 @@
 #include "Time.h"
 #include "Game.h"
 #include "Input.h"
+#include "RenderUtil.h"
 
 class GameEngine
 {

@@ -161,7 +161,7 @@ LRESULT CALLBACK GLWindow::WndProcMem(HWND hwnd, UINT message, WPARAM wparam, LP
 
 void GLWindow::render()
 {
-
+	SwapBuffers(hDC);
 }
 
 bool GLWindow::isActive() const

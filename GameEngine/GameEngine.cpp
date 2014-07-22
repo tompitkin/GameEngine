@@ -18,6 +18,7 @@ void GameEngine::start(int width, int height, char* title)
 
 	window = new GLWindow();
 	window->create(width, height, title);
+	RenderUtil::initGraphics();
 	run();
 }
 
@@ -113,11 +114,10 @@ void GameEngine::run()
 
 void GameEngine::render()
 {
+	RenderUtil::clearScreen();
 	game.render();
 	if (window->isActive())
-	{
 		window->render();
-	}
 }
 
 void GameEngine::cleanUp()
