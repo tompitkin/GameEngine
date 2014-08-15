@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Input.h"
-#include "Vector2f.h"
+#include "Mesh.h"
+#include "Shader.h"
+
+class Input;
 
 class Game
 {
@@ -11,5 +13,9 @@ public:
 	void input(Input &input);
 	void update();
 	void render();
+
+private:
+	Mesh mesh;
+	Shader shader;
 };
 

@@ -1,5 +1,8 @@
 #include "Input.h"
 
+#include "GLWindow.h"
+#include "Vector2f.h"
+
 const int Input::remapMouse[] = { VK_LBUTTON, VK_MBUTTON, VK_RBUTTON, VK_XBUTTON1, VK_XBUTTON2 };
 
 Input::Input(const GLWindow &window) : 

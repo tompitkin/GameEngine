@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+#define GLEW_STATIC
 
 class GLWindow
 {
@@ -17,7 +17,7 @@ public:
 	bool isKeyDown(int keyCode) const;
 	int getWidth() const;
 	int getHeight() const;
-	string getTitle() const;
+	std::string getTitle() const;
 	HWND getHWND() const;
 	
 
@@ -26,7 +26,7 @@ private:
 	LRESULT CALLBACK WndProcMem(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 	HINSTANCE hInstance;
 	bool active;
-	vector<bool> keys;
+	std::vector<bool> keys;
 	int width;
 	int height;
 	int pf;

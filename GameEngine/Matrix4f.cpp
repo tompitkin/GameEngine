@@ -43,12 +43,12 @@ float& Matrix4f::operator()(unsigned int col, unsigned int row)
 	return m[col * 4 + row];
 }
 
-vector<float> Matrix4f::getM() const
+std::vector<float> Matrix4f::getM() const
 {
 	return m;
 }
 
-void Matrix4f::setM(const vector<float>& m)
+void Matrix4f::setM(const std::vector<float>& m)
 {
 	this->m.assign(m.begin(), m.end());
 }

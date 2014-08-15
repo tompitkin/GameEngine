@@ -1,10 +1,7 @@
 #pragma once
 
 #include <string>
-#include <sstream>
-#include "Utility.h"
-
-using namespace std;
+#include <iosfwd>
 
 class Vector2f
 {
@@ -27,8 +24,8 @@ public:
 	friend Vector2f operator/ (const Vector2f& a, const Vector2f& b);
 	friend Vector2f operator/ (const Vector2f& a, int b);
 	friend Vector2f operator/ (int a, const Vector2f& b);
-	friend ostream& operator<< (ostream&, const Vector2f& v);
-	string toString() const;
+	friend std::ostream& operator<< (std::ostream&, const Vector2f& v);
+	std::string toString() const;
 	float getX() const;
 	void setX(float x);
 	float getY() const;

@@ -1,5 +1,8 @@
 #include "RenderUtil.h"
 
+#include <GL\glew.h>
+#include <sstream>
+
 void RenderUtil::clearScreen()
 {
 	//TODO Stencil Buffer
@@ -17,4 +20,16 @@ void RenderUtil::initGraphics()
 	//TODO Depth Clamp
 
 	glEnable(GL_FRAMEBUFFER_SRGB);
+}
+
+std::string RenderUtil::getOpenGLVersion()
+{
+	GLint glVersion[2];
+	glGetIntegerv(GL_MAJOR_VERSION, &glVersion[0]);
+	glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
+
+	std::ostringstream sstr;
+	sstr << glVersion[0] << "." << glVersion[1];
+	
+	return sstr.str();
 }

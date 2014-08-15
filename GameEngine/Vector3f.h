@@ -1,9 +1,7 @@
 #pragma once
 
 #include <string>
-#include <sstream>
-
-using namespace std;
+#include <iosfwd>
 
 class Vector3f
 {
@@ -27,8 +25,8 @@ public:
 	friend Vector3f operator/ (const Vector3f& a, const Vector3f& b);
 	friend Vector3f operator/ (const Vector3f& a, int b);
 	friend Vector3f operator/ (int a, const Vector3f& b);
-	friend ostream& operator<< (ostream&, const Vector3f& v);
-	string toString() const;
+	friend std::ostream& operator<< (std::ostream&, const Vector3f& v);
+	std::string toString() const;
 	float getX() const;
 	void setX(float x);
 	float getY() const;

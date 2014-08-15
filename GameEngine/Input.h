@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "GLWindow.h"
-#include "Vector2f.h"
+
+class GLWindow;
+class Vector2f;
 
 class Input
 {
@@ -23,6 +24,6 @@ public:
 private:
 	static const int remapMouse[];
 	const GLWindow &win;
-	vector<bool> lastKeys;
-	vector<bool> lastMouse;
+	std::vector<bool> lastKeys;
+	std::vector<bool> lastMouse;
 };

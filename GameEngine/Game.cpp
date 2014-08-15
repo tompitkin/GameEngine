@@ -1,7 +1,25 @@
 #include "Game.h"
 
+#include <Windows.h>
+#include <vector>
+#include <sstream>
+#include <string>
+#include "Vector3f.h"
+#include "Vector2f.h"
+#include "Vertex.h"
+#include "Input.h"
+#include "ResourceLoader.h"
+
 Game::Game()
 {
+	static const Vertex data[] = { Vertex(Vector3f(-1, -1, 0)), Vertex(Vector3f(0, 1, 0)), Vertex(Vector3f(1, -1, 0)) };
+	std::vector<Vertex> verts(data, data + sizeof(data) / sizeof(data[0]));
+
+	mesh.addVertices(verts);
+
+	shader.addVertexShader(ResourceLoader::loadShader("basicVert.vs"));
+	shader.addFragmentShader(ResourceLoader::loadShader("basicFrag.fs"));
+	shader.compile();
 }
 
 Game::~Game()
@@ -16,7 +34,7 @@ void Game::input(Input &input)
 		OutputDebugString("We've just released up!\n");
 	if (input.getMouseDown(0))
 	{
-		ostringstream ss;
+		std::ostringstream ss;
 		ss << "We've just pressed the left mouse button at " << input.getMousePosition() << "!\n";
 		OutputDebugString(ss.str().c_str());
 	}
@@ -46,4 +64,6 @@ void Game::update()
 
 void Game::render()
 {
+	shader.bind();
+	mesh.draw();
 }

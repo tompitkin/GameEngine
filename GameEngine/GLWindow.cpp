@@ -1,5 +1,10 @@
 #include "GLWindow.h"
 
+#include <GL\glew.h>
+
+#pragma comment(lib, "glew32.lib")
+#pragma comment(lib, "opengl32.lib")
+
 GLWindow::GLWindow() : keys(256, false)
 {
 	active = false;
@@ -95,6 +100,10 @@ void GLWindow::create(int width, int height, char* title)
 	if (!wglMakeCurrent(hDC, hGLRC))
 		FatalAppExit(NULL, TEXT("Can't activate the GL rendering context."));
 
+	GLenum err = glewInit();
+	if (err != GLEW_OK)
+		FatalAppExit(NULL, TEXT("GLEW initialization failed."));
+
 	ShowWindow(hWnd, SW_SHOW);
 	SetForegroundWindow(hWnd);
 	SetFocus(hWnd);
@@ -184,7 +193,7 @@ int GLWindow::getHeight() const
 	return height;
 }
 
-string GLWindow::getTitle()const
+std::string GLWindow::getTitle()const
 {
 	return title;
 }

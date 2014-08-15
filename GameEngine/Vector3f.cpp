@@ -1,4 +1,5 @@
 #include "Vector3f.h"
+#include <sstream>
 
 Vector3f::Vector3f(float x, float y, float z)
 {
@@ -104,14 +105,14 @@ Vector3f operator/ (int a, const Vector3f& b)
 	return Vector3f(a / b.x, a / b.y, a / b.z);
 }
 
-ostream& operator<< (ostream& s, const Vector3f& v)
+std::ostream& operator<< (std::ostream& s, const Vector3f& v)
 {
 	return s << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 }
 
-string Vector3f::toString() const
+std::string Vector3f::toString() const
 {
-	ostringstream ss;
+	std::ostringstream ss;
 	ss << *this;
 	return ss.str();
 }

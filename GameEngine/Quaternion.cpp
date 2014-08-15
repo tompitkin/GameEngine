@@ -1,5 +1,8 @@
 #include "Quaternion.h"
 
+#include <cmath>
+#include "Vector3f.h"
+
 Quaternion::Quaternion(float x, float y, float z, float w)
 {
 	this->x = x;

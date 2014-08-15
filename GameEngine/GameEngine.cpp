@@ -1,5 +1,11 @@
 #include "GameEngine.h"
 
+#include "GLWindow.h"
+#include "Time.h"
+#include "Game.h"
+#include "Input.h"
+#include "RenderUtil.h"
+
 GameEngine::GameEngine()
 {
 	isRunning = false;
@@ -18,7 +24,19 @@ void GameEngine::start(int width, int height, char* title)
 
 	window = new GLWindow();
 	window->create(width, height, title);
+
+	#ifdef _DEBUG
+		char msgbuf[30];
+		sprintf_s(msgbuf, 30, "GLEW Version: %s\n", (char*)glewGetString(GLEW_VERSION));
+		OutputDebugString(msgbuf);
+		sprintf_s(msgbuf, 30, "OpenGL Version: %s\n", RenderUtil::getOpenGLVersion().c_str());
+		OutputDebugString(msgbuf);
+	#endif
+
 	RenderUtil::initGraphics();
+
+	game = new Game();
+
 	run();
 }
 
@@ -81,10 +99,10 @@ void GameEngine::run()
 
 			time.setDelta(frameTime);
 
-			game.input(input);
+			game->input(input);
 			input.update();
 
-			game.update();
+			game->update();
 
 			#ifdef _DEBUG
 				if (frameCounter >= time.SECOND)
@@ -115,13 +133,16 @@ void GameEngine::run()
 void GameEngine::render()
 {
 	RenderUtil::clearScreen();
-	game.render();
+	game->render();
 	if (window->isActive())
 		window->render();
 }
 
 void GameEngine::cleanUp()
 {
+	delete game;
+	game = NULL;
+
 	if (window)
 	{
 		delete window;

@@ -1,10 +1,7 @@
 #pragma once
 
-#include "GLWindow.h"
-#include "Time.h"
-#include "Game.h"
-#include "Input.h"
-#include "RenderUtil.h"
+class Game;
+class GLWindow;
 
 class GameEngine
 {
@@ -20,9 +17,7 @@ private:
 	void render();
 	void cleanUp();
 	bool isRunning;
-	Game game;
-
-private:
+	Game *game;
 	GLWindow *window;
 };
 

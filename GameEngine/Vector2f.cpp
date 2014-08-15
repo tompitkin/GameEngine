@@ -1,5 +1,8 @@
 #include "Vector2f.h"
 
+#include <sstream>
+#include "Utility.h"
+
 Vector2f::Vector2f(float x, float y)
 {
 	this->x = x;
@@ -97,14 +100,14 @@ Vector2f operator/ (int a, const Vector2f& b)
 	return Vector2f(a / b.x, a / b.y);
 }
 
-ostream& operator<< (ostream& s, const Vector2f& v)
+std::ostream& operator<< (std::ostream& s, const Vector2f& v)
 {
 	return s << "(" << v.x << ", " << v.y << ")";
 }
 
-string Vector2f::toString() const
+std::string Vector2f::toString() const
 {
-	ostringstream ss;
+	std::ostringstream ss;
 	ss << *this;
 	return ss.str();
 }

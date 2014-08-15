@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include "GameEngine.h"
 
 #ifdef _DEBUG
