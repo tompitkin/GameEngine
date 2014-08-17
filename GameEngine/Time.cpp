@@ -1,28 +1,26 @@
 #include "Time.h"
 
-Time::Time()
+double Time::delta = 0;
+LARGE_INTEGER Time::frequency;
+
+void Time::startTime()
 {
-	delta = 0;
 	QueryPerformanceFrequency(&frequency);
 }
 
-Time::~Time()
-{
-}
-
-_int64 Time::getTime() const
+_int64 Time::getTime()
 {
 	LARGE_INTEGER time;
 	QueryPerformanceCounter(&time);
 	return time.QuadPart;
 }
 
-double Time::getTimePassedNano(_int64 time1, _int64 time2) const
+double Time::getTimePassedNano(_int64 time1, _int64 time2)
 {
 	return (double)((time1 - time2) * SECOND / frequency.QuadPart);
 }
 
-double Time::getDelta() const
+double Time::getDelta() 
 {
 	return delta;
 }

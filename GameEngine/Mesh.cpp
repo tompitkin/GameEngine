@@ -16,7 +16,7 @@ Mesh::~Mesh()
 void Mesh::addVertices(const std::vector<Vertex>& vertices)
 {
 	std::vector<GLfloat> verts;
-	Utils::createBuffer(vertices, verts);
+	Utils::createFloatBuffer(vertices, verts);
 
 	size = vertices.size();
 

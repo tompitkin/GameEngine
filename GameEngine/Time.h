@@ -5,16 +5,15 @@
 class Time
 {
 public:
-	Time();
-	~Time();
-	_int64 getTime() const;
-	double getDelta() const;
-	double getTimePassedNano(_int64 time1, _int64 time2) const;
-	void setDelta(double delta);
+	static void startTime();
+	static _int64 getTime();
+	static double getDelta();
+	static double getTimePassedNano(_int64 time1, _int64 time2);
+	static void setDelta(double delta);
 	static const long SECOND = 1000000000;
 
 private:
-	double delta;
-	LARGE_INTEGER frequency;
+	static double delta;
+	static LARGE_INTEGER frequency;
 };
 

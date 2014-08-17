@@ -7,7 +7,7 @@ template <typename T> T Utils::clamp(const T& value, const T& lower, const T&upp
 		return max(lower, min(value, upper));
 }
 
-void Utils::createBuffer(const std::vector<Vertex>& vertices, std::vector<float>& buffer)
+void Utils::createFloatBuffer(const std::vector<Vertex>& vertices, std::vector<float>& buffer)
 {
 	buffer.clear();
 	buffer.reserve(vertices.size() * Vertex::SIZE);

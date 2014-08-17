@@ -50,8 +50,9 @@ void GameEngine::stop()
 
 void GameEngine::run()
 {
+	Time::startTime();
+
 	MSG msg;
-	Time time;
 	Input input(*window);
 
 	#ifdef _DEBUG
@@ -63,18 +64,18 @@ void GameEngine::run()
 
 	const double frameTime = 1.0 / FRAME_CAP;
 
-	_int64 lastTime = time.getTime();
+	_int64 lastTime = Time::getTime();
 	double unprocessedTime = 0;
 
 	while (isRunning)
 	{
 		bool frameUpdated = false;
 
-		_int64 startTime = time.getTime();
-		double passedTime = time.getTimePassedNano(startTime, lastTime);
+		_int64 startTime = Time::getTime();
+		double passedTime = Time::getTimePassedNano(startTime, lastTime);
 		lastTime = startTime;
 
-		unprocessedTime += passedTime / (double)time.SECOND;
+		unprocessedTime += passedTime / (double)Time::SECOND;
 
 		#ifdef _DEBUG
 			frameCounter += (long)passedTime;
@@ -97,7 +98,7 @@ void GameEngine::run()
 				}
 			}
 
-			time.setDelta(frameTime);
+			Time::setDelta(frameTime);
 
 			game->input(input);
 			input.update();
@@ -105,7 +106,7 @@ void GameEngine::run()
 			game->update();
 
 			#ifdef _DEBUG
-				if (frameCounter >= time.SECOND)
+				if (frameCounter >= Time::SECOND)
 				{
 					char msgbuf[10];
 					sprintf_s(msgbuf, 10, "%d\n", frames);

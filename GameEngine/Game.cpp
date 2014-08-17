@@ -9,6 +9,7 @@
 #include "Vertex.h"
 #include "Input.h"
 #include "ResourceLoader.h"
+#include "Time.h"
 
 Game::Game()
 {
@@ -20,6 +21,8 @@ Game::Game()
 	shader.addVertexShader(ResourceLoader::loadShader("basicVert.vs"));
 	shader.addFragmentShader(ResourceLoader::loadShader("basicFrag.fs"));
 	shader.compile();
+
+	shader.addUniform("clampHigh");
 }
 
 Game::~Game()
@@ -60,6 +63,9 @@ void Game::input(Input &input)
 
 void Game::update()
 {
+	temp += Time::getDelta();
+
+	shader.setUniformf("clampHigh", std::abs(std::sin(temp)));
 }
 
 void Game::render()

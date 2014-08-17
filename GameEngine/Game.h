@@ -17,5 +17,6 @@ public:
 private:
 	Mesh mesh;
 	Shader shader;
+	float temp = 0.0f;
 };
 
