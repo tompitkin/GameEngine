@@ -8,11 +8,12 @@ class Matrix4f
 public:
 	Matrix4f();
 	~Matrix4f();
-	void initIdentity();
+	const Matrix4f& initIdentity();
+	const Matrix4f& initTranslation(float x, float y, float z);
 	friend Matrix4f operator* (const Matrix4f& a, const Matrix4f& b);
 	float operator()(unsigned int col, unsigned int row) const;
 	float& operator()(unsigned int col, unsigned int row);
-	std::vector<float> getM() const;
+	const std::vector<float>& getM() const;
 	void setM(const std::vector<float>& m);
 
 private:

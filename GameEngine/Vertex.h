@@ -7,7 +7,7 @@ class Vertex
 public:
 	Vertex(const Vector3f& pos);
 	~Vertex();
-	Vector3f getPos() const;
+	const Vector3f& getPos() const;
 	void setPos(Vector3f pos);
 	static const unsigned int SIZE = 3;
 

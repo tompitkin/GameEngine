@@ -8,12 +8,24 @@ Matrix4f::~Matrix4f()
 {
 }
 
-void Matrix4f::initIdentity()
+const Matrix4f& Matrix4f::initIdentity()
 {
 	m[0] = 1;	m[1] = 0;	 m[2] = 0;	m[3] = 0;
 	m[4] = 0;	m[5] = 1;	 m[6] = 0;	m[7] = 0;
 	m[8] = 0;	m[9] = 0;	 m[10] = 1;	m[11] = 0;
 	m[12] = 0;	m[13] = 0;	 m[14] = 0;	m[15] = 1;
+
+	return *this;
+}
+
+const Matrix4f& Matrix4f::initTranslation(float x, float y, float z)
+{
+	m[0] = 1;	m[1] = 0;	 m[2] = 0;	m[3] = x;
+	m[4] = 0;	m[5] = 1;	 m[6] = 0;	m[7] = y;
+	m[8] = 0;	m[9] = 0;	 m[10] = 1;	m[11] = z;
+	m[12] = 0;	m[13] = 0;	 m[14] = 0;	m[15] = 1;
+
+	return *this;
 }
 
 Matrix4f operator* (const Matrix4f& a, const Matrix4f& b)
@@ -43,7 +55,7 @@ float& Matrix4f::operator()(unsigned int col, unsigned int row)
 	return m[col * 4 + row];
 }
 
-std::vector<float> Matrix4f::getM() const
+const std::vector<float>& Matrix4f::getM() const
 {
 	return m;
 }

@@ -17,7 +17,7 @@ public:
 	bool isKeyDown(int keyCode) const;
 	int getWidth() const;
 	int getHeight() const;
-	std::string getTitle() const;
+	const std::string& getTitle() const;
 	HWND getHWND() const;
 	
 

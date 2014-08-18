@@ -8,7 +8,7 @@ Vertex::~Vertex()
 {
 }
 
-Vector3f Vertex::getPos() const
+const Vector3f& Vertex::getPos() const
 {
 	return pos;
 }

@@ -10,6 +10,8 @@
 #include "Input.h"
 #include "ResourceLoader.h"
 #include "Time.h"
+#include "Matrix4f.h"
+
 
 Game::Game()
 {
@@ -22,7 +24,7 @@ Game::Game()
 	shader.addFragmentShader(ResourceLoader::loadShader("basicFrag.fs"));
 	shader.compile();
 
-	shader.addUniform("clampHigh");
+	shader.addUniform("transform");
 }
 
 Game::~Game()
@@ -63,13 +65,13 @@ void Game::input(Input &input)
 
 void Game::update()
 {
-	temp += Time::getDelta();
-
-	shader.setUniformf("clampHigh", std::abs(std::sin(temp)));
+	timePassed += Time::getDelta();
+	trans.setTranslation(std::sin(timePassed), 0, 0);
 }
 
 void Game::render()
 {
 	shader.bind();
+	shader.setUniform("transform", trans.getTransformation());
 	mesh.draw();
 }

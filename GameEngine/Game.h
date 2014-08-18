@@ -2,6 +2,7 @@
 
 #include "Mesh.h"
 #include "Shader.h"
+#include "Transform.h"
 
 class Input;
 
@@ -17,6 +18,7 @@ public:
 private:
 	Mesh mesh;
 	Shader shader;
-	float temp = 0.0f;
+	Transform trans;
+	float timePassed = 0.0f;
 };
 

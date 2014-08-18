@@ -8,7 +8,7 @@ class Vector2f;
 class Input
 {
 public:
-	Input(const GLWindow &window);
+	Input(const GLWindow *window);
 	~Input();
 	void update();
 	bool getKey(unsigned int keyCode) const;
@@ -23,7 +23,7 @@ public:
 
 private:
 	static const int remapMouse[];
-	const GLWindow &win;
+	const GLWindow *win;
 	std::vector<bool> lastKeys;
 	std::vector<bool> lastMouse;
 };

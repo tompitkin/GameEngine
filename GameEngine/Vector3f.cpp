@@ -1,4 +1,5 @@
 #include "Vector3f.h"
+
 #include <sstream>
 
 Vector3f::Vector3f(float x, float y, float z)

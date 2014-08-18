@@ -53,7 +53,7 @@ void GameEngine::run()
 	Time::startTime();
 
 	MSG msg;
-	Input input(*window);
+	Input input(window);
 
 	#ifdef _DEBUG
 		unsigned _int32 frames = 0;

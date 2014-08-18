@@ -193,7 +193,7 @@ int GLWindow::getHeight() const
 	return height;
 }
 
-std::string GLWindow::getTitle()const
+const std::string& GLWindow::getTitle()const
 {
 	return title;
 }
