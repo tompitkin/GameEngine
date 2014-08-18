@@ -2,11 +2,6 @@
 
 #include "Vertex.h"
 
-template <typename T> T Utils::clamp(const T& value, const T& lower, const T&upper)
-{
-		return max(lower, min(value, upper));
-}
-
 void Utils::createFloatBuffer(const std::vector<Vertex>& vertices, std::vector<float>& buffer)
 {
 	buffer.clear();

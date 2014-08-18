@@ -67,6 +67,7 @@ void Game::update()
 {
 	timePassed += Time::getDelta();
 	trans.setTranslation(std::sin(timePassed), 0, 0);
+	trans.setRotation(0, 0, std::sin(timePassed) * 180);
 }
 
 void Game::render()

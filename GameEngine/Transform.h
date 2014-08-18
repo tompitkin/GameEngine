@@ -12,8 +12,12 @@ public:
 	const Vector3f& getTranslation() const;
 	void setTranslation(const Vector3f& translation);
 	void setTranslation(float x, float y, float z);
+	const Vector3f& getRotation() const;
+	void setRotation(const Vector3f& translation);
+	void setRotation(float x, float y, float z);
 
 private:
 	Vector3f *translation;
+	Vector3f *rotation;
 };
 

@@ -33,7 +33,7 @@ void Vector2f::normalize()
 
 Vector2f Vector2f::rotate(float angle) const
 {
-	double rad = angle * PI / 180;
+	double rad = Utils::toRadians(angle);
 	double cos = std::cos(rad);
 	double sin = std::sin(rad);
 
