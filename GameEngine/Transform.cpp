@@ -26,7 +26,7 @@ Matrix4f Transform::getTransformation() const
 	rotM.initRotation(rotation->getX(), rotation->getY(), rotation->getZ());
 	scaleM.initScale(scale->getX(), scale->getY(), scale->getZ());
 
-	return scaleM * rotM * transM;
+	return transM * rotM * scaleM;
 }
 
 const Vector3f& Transform::getTranslation() const

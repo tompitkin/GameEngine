@@ -6,6 +6,7 @@
 Mesh::Mesh()
 {
 	glGenBuffers(1, &vbo);
+	glGenBuffers(1, &ibo);
 	size = 0;
 }
 
@@ -13,15 +14,18 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::addVertices(const std::vector<Vertex>& vertices)
+void Mesh::addVertices(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
 {
-	std::vector<GLfloat> verts;
-	Utils::createFloatBuffer(vertices, verts);
+	size = indices.size();
 
-	size = vertices.size();
+	std::vector<GLfloat> verts;
+	Utils::createFloatBuffer(vertices, verts);;
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(verts[0]), &verts[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(indices[0]), &indices[0], GL_STATIC_DRAW);
 }
 
 void Mesh::draw() const
@@ -31,7 +35,8 @@ void Mesh::draw() const
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex::SIZE * 4, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, size);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
 	glDisableVertexAttribArray(0);
 }

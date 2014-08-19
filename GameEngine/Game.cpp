@@ -15,10 +15,13 @@
 
 Game::Game()
 {
-	static const Vertex data[] = { Vertex(Vector3f(-1, -1, 0)), Vertex(Vector3f(0, 1, 0)), Vertex(Vector3f(1, -1, 0)) };
-	std::vector<Vertex> verts(data, data + sizeof(data) / sizeof(data[0]));
+	const Vertex dataV[] = { Vertex(Vector3f(-1, -1, 0)), Vertex(Vector3f(0, 1, 0)), Vertex(Vector3f(1, -1, 0)), Vertex(Vector3f(0, -1, 1)) };
+	std::vector<Vertex> verts(dataV, dataV + sizeof(dataV) / sizeof(dataV[0]));
 
-	mesh.addVertices(verts);
+	const unsigned int dataI[] = { 0, 1, 3, 3, 1, 2, 2, 1, 0, 0, 2, 3};
+	std::vector<unsigned int> indices(dataI, dataI + sizeof(dataI) / sizeof(dataI[0]));
+
+	mesh.addVertices(verts, indices);
 
 	shader.addVertexShader(ResourceLoader::loadShader("basicVert.vs"));
 	shader.addFragmentShader(ResourceLoader::loadShader("basicFrag.fs"));
@@ -68,11 +71,10 @@ void Game::update()
 	timePassed += Time::getDelta();
 
 	float sinWave = std::sin(timePassed);
-	float sinWaveABS = std::abs(sinWave);
 
 	trans.setTranslation(sinWave, 0, 0);
-	trans.setRotation(0, 0, sinWave * 180);
-	trans.setScale(sinWaveABS, sinWaveABS, sinWaveABS);
+	trans.setRotation(0, sinWave * 180, 0);
+	//trans.setScale(sinWave, sinWave, sinWave);
 }
 
 void Game::render()
