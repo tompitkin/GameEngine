@@ -66,8 +66,13 @@ void Game::input(Input &input)
 void Game::update()
 {
 	timePassed += Time::getDelta();
-	trans.setTranslation(std::sin(timePassed), 0, 0);
-	trans.setRotation(0, 0, std::sin(timePassed) * 180);
+
+	float sinWave = std::sin(timePassed);
+	float sinWaveABS = std::abs(sinWave);
+
+	trans.setTranslation(sinWave, 0, 0);
+	trans.setRotation(0, 0, sinWave * 180);
+	trans.setScale(sinWaveABS, sinWaveABS, sinWaveABS);
 }
 
 void Game::render()

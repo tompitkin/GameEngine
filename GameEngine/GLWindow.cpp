@@ -130,9 +130,6 @@ LRESULT CALLBACK GLWindow::WndProcMem(HWND hwnd, UINT message, WPARAM wparam, LP
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
 	case WM_KEYDOWN:
 		keys[wparam] = true;
 		return 0;

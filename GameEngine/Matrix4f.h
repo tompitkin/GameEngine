@@ -11,6 +11,7 @@ public:
 	const Matrix4f& initIdentity();
 	const Matrix4f& initTranslation(float x, float y, float z);
 	const Matrix4f& initRotation(float x, float y, float z);
+	const Matrix4f& initScale(float x, float y, float z);
 	friend Matrix4f operator* (const Matrix4f& a, const Matrix4f& b);
 	float operator()(unsigned int col, unsigned int row) const;
 	float& operator()(unsigned int col, unsigned int row);
