@@ -81,22 +81,20 @@ void GameEngine::run()
 			frameCounter += (long)passedTime;
 		#endif
 
+		if (PeekMessage(&msg, window->getHWND(), 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+				stop();
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
 		while (unprocessedTime > frameTime)
 		{
 			frameUpdated = true;
 
 			unprocessedTime -= frameTime;
-
-			if (PeekMessage(&msg, window->getHWND(), 0, 0, PM_REMOVE))
-			{
-				if (msg.message == WM_QUIT)
-					stop();
-				else
-				{
-					TranslateMessage(&msg);
-					DispatchMessage(&msg);
-				}
-			}
 
 			Time::setDelta(frameTime);
 

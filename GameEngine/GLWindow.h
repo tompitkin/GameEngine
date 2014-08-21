@@ -12,6 +12,7 @@ public:
 	GLWindow();
 	~GLWindow();
 	void create(int width, int height, char* title);
+	void close();
 	void render();
 	bool isActive() const;
 	bool isKeyDown(int keyCode) const;

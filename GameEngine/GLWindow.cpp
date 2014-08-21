@@ -122,10 +122,13 @@ LRESULT CALLBACK GLWindow::WndProcMem(HWND hwnd, UINT message, WPARAM wparam, LP
 	switch (message)
 	{
 	case WM_ACTIVATE:
-		if (!HIWORD(wparam))
-			active = true;
-		else
+		if (LOWORD(wparam) == WA_INACTIVE)
 			active = false;
+		else
+			active = true;
+		return 0;
+	case WM_SIZE:
+		glViewport(0, 0, LOWORD(lparam), HIWORD(lparam) == 0 ? 1 : HIWORD(lparam));
 		return 0;
 	case WM_CLOSE:
 		PostQuitMessage(0);

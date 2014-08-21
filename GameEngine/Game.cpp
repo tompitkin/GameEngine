@@ -15,13 +15,15 @@
 
 Game::Game()
 {
-	const Vertex dataV[] = { Vertex(Vector3f(-1, -1, 0)), Vertex(Vector3f(0, 1, 0)), Vertex(Vector3f(1, -1, 0)), Vertex(Vector3f(0, -1, 1)) };
+	/*const Vertex dataV[] = { Vertex(Vector3f(-1, -1, 0)), Vertex(Vector3f(0, 1, 0)), Vertex(Vector3f(1, -1, 0)), Vertex(Vector3f(0, -1, 1)) };
 	std::vector<Vertex> verts(dataV, dataV + sizeof(dataV) / sizeof(dataV[0]));
 
 	const unsigned int dataI[] = { 0, 1, 3, 3, 1, 2, 2, 1, 0, 0, 2, 3};
 	std::vector<unsigned int> indices(dataI, dataI + sizeof(dataI) / sizeof(dataI[0]));
 
-	mesh.addVertices(verts, indices);
+	mesh.addVertices(verts, indices);*/
+
+	ResourceLoader::loadMesh("cube.obj", mesh);
 
 	shader.addVertexShader(ResourceLoader::loadShader("basicVert.vs"));
 	shader.addFragmentShader(ResourceLoader::loadShader("basicFrag.fs"));
@@ -74,7 +76,7 @@ void Game::update()
 
 	trans.setTranslation(sinWave, 0, 0);
 	trans.setRotation(0, sinWave * 180, 0);
-	//trans.setScale(sinWave, sinWave, sinWave);
+	trans.setScale(0.7, 0.7, 0.7);
 }
 
 void Game::render()
