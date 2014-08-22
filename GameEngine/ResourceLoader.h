@@ -4,6 +4,7 @@
 #include <vector>
 
 class Mesh;
+class Vertex;
 
 class ResourceLoader
 {
@@ -13,6 +14,12 @@ public:
 	static std::string loadShader(const std::string& fileName);
 	static int loadMesh(const std::string& fileName, Mesh& mesh);
 
-private:	
-	static void split(std::istringstream& input, std::vector<std::string>& tokens, char delimiter);
+private:
+	struct OBJ
+	{
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
+	};
+
+	static void parseObjLine(char **line, OBJ& data);
 };

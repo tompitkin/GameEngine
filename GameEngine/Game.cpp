@@ -23,7 +23,7 @@ Game::Game()
 
 	mesh.addVertices(verts, indices);*/
 
-	ResourceLoader::loadMesh("cube.obj", mesh);
+	ResourceLoader::loadMesh("bigmonkey.obj", mesh);
 
 	shader.addVertexShader(ResourceLoader::loadShader("basicVert.vs"));
 	shader.addFragmentShader(ResourceLoader::loadShader("basicFrag.fs"));
@@ -76,7 +76,7 @@ void Game::update()
 
 	trans.setTranslation(sinWave, 0, 0);
 	trans.setRotation(0, sinWave * 180, 0);
-	trans.setScale(0.7, 0.7, 0.7);
+	trans.setScale(0.5, 0.5, 0.5);
 }
 
 void Game::render()

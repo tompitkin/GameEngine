@@ -3,6 +3,9 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <fcntl.h>
+#include <io.h>
+#include <Windows.h>
 #include "Mesh.h"
 #include "Vertex.h"
 
@@ -47,42 +50,74 @@ int ResourceLoader::loadMesh(const std::string& fileName, Mesh& mesh)
 		return 1;
 	}
 
-	std::ifstream fileIn;
 	std::ostringstream filePath;
-	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices;
-
 	filePath << "./res/models/" << fileName;
-	fileIn.open(filePath.str());
 
-	if (fileIn.is_open())
+	static const int BUFFER_SIZE = 16 * 1024;
+	int fd = -1;
+	_sopen_s(&fd, filePath.str().c_str(), _O_RDONLY, _SH_DENYNO, 0);
+
+	if (fd == -1)
 	{
-		std::string line;
-		while (std::getline(fileIn, line))
-		{
-			std::vector<std::string> tokens;
-			ResourceLoader::split(std::istringstream(line), tokens, ' ');
-
-			if (tokens[0] == "v")
-				vertices.push_back(Vertex(Vector3f(atof(tokens[1].c_str()), atof(tokens[2].c_str()), atof(tokens[3].c_str()))));
-			else if (tokens[0] == "f")
-			{
-				indices.push_back(atoi(tokens[1].c_str()) - 1);
-				indices.push_back(atoi(tokens[2].c_str()) - 1);
-				indices.push_back(atoi(tokens[3].c_str()) - 1);
-			}
-		}
-		fileIn.close();
+		std::cerr << "ERROR: Could not open file for mesh data: " << fileName << '\n';
+		return 1;
 	}
 
-	mesh.addVertices(vertices, indices);
+	OBJ data;
+	char buf[BUFFER_SIZE+1];
+	while (size_t bytes_read = _read(fd, buf, BUFFER_SIZE))
+	{
+		if (bytes_read == (size_t)-1)
+		{
+			std::cerr << "ERROR: Could not read file for mesh data: " << fileName << '\n';
+			return 1;
+		}
+		if (!bytes_read)
+			break;
+
+		buf[bytes_read] = '\0';
+
+		char *line = buf;
+		for (char *end = (char*)memchr(buf, '\n', bytes_read); end && (end = (char*)memchr(end, '\n', (buf + bytes_read) - end)); ++end)
+		{
+			*end = '\0';
+			parseObjLine(&line, data);
+			line = end+1;
+		}
+		
+		if (bytes_read == BUFFER_SIZE)
+			_lseek(fd, (line - buf) - BUFFER_SIZE, SEEK_CUR);
+		else
+			parseObjLine(&line, data);
+	}
+
+	_close(fd);
+
+	mesh.addVertices(data.vertices, data.indices);
 
 	return 0;
 }
 
-void ResourceLoader::split(std::istringstream& input, std::vector<std::string>& tokens, char delimiter)
+void ResourceLoader::parseObjLine(char **line, OBJ& data)
 {
-	std::string token;
-	while (std::getline(input, token, delimiter))
-		tokens.push_back(token);
+	char *nextToken;
+	char *token = strtok_s(*line, " ", &nextToken);
+
+	if (token)
+	{
+		if (!strcmp(token, "v"))
+		{
+			float vals[3];
+			vals[0] = atof(strtok_s(NULL, " ", &nextToken));
+			vals[1] = atof(strtok_s(NULL, " ", &nextToken));
+			vals[2] = atof(strtok_s(NULL, " ", &nextToken));
+			data.vertices.push_back(Vertex(Vector3f(vals[0], vals[1], vals[2])));
+		}
+		else if (!strcmp(token, "f"))
+		{
+			data.indices.push_back(atoi(strtok_s(NULL, " ", &nextToken)) - 1);
+			data.indices.push_back(atoi(strtok_s(NULL, " ", &nextToken)) - 1);
+			data.indices.push_back(atoi(strtok_s(NULL, " ", &nextToken)) - 1);
+		}
+	}
 }
